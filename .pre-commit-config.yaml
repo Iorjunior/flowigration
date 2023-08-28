@@ -1,0 +1,28 @@
+repos:
+-   repo: https://github.com/commitizen-tools/commitizen
+    rev: 3.7.0
+    hooks:
+    - id: commitizen
+    - id: commitizen-branch
+      stages: [push]
+
+-   repo: https://github.com/timothycrosley/isort
+    rev: 5.12.0
+    hooks:
+    - id: isort
+
+-   repo: local
+    hooks:
+    - id: blue-check
+      name: blue-check
+      entry: blue --check --diff .
+      language: system
+      pass_filenames: false
+      always_run: true
+
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    - id: trailing-whitespace
+    - id: check-added-large-files
+    - id: check-yaml

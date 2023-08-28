@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "flowigration"
+version = "0.1.0"
+description = ""
+authors = ["iorjunior <juniorcoda@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.2.4"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.3"
+commitizen = "^3.7.0"
+isort = "^5.12.0"
+blue = "^0.9.1"
+pytest-django = "^4.5.2"
+taskipy = "^1.12.0"
+pytest-cov = "^4.1.0"
+
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "semver"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "core.settings"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+[tool.taskipy.tasks]
+lint = "blue --check --diff . && isort --check --diff ."
+automatic_lint = "blue . && isort ."
+pre_test = "task lint"
+test = "pytest -s -x -vv --cov=. --cov-config=.coveragerc"
+post_test = "coverage html"
